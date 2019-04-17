@@ -40,14 +40,16 @@ SYSCALL_DEFINE2(get_proc_info, pid_t, pid, struct procinfos*, info) {
 
         if(copy_to_user(info, &tmp, sizeof(tmp)))
             return EFAULT;
-
+        
+        
+        printk("MSSV: %ld", info->studentID);
         printk("Parent PID : %d\n", info->parent_proc.pid);
         printk("Parent Name : %s \n", info->parent_proc.name);
         printk("Child PID : %d\n", info->oldest_child_proc.pid);
         printk("Child Name : %s\n" , info->oldest_child_proc.name);
         printk("Current PID : %d\n", info->proc.pid);
         printk("Current Name : %s \n", info->proc.name);
-        printk("MSSV: %ld", info->studentID);
+        
 
     }
     else 
@@ -85,18 +87,20 @@ SYSCALL_DEFINE2(get_proc_info, pid_t, pid, struct procinfos*, info) {
         else 
         {
             tmp.oldest_child_proc.pid = -1;
+            strcpy(tmp.oldest_child_proc.name, "Non-existent"); 
         }
 
         if(copy_to_user(info, &tmp, sizeof(tmp)))
             return EFAULT;
 
+        printk("MSSV: %ld", info->studentID);
         printk("Parent PID : %d\n", info->parent_proc.pid);
         printk("Parent Name : %s \n", info->parent_proc.name);
         printk("Child PID : %d\n", info->oldest_child_proc.pid);
         printk("Child Name : %s\n" , info->oldest_child_proc.name);
         printk("Task PID : %d\n", info->proc.pid);
         printk("Task Name : %s \n", info->proc.name);
-        printk("MSSV: %ld", info->studentID);        
+                
     }
     return 0;   
 }
